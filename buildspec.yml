@@ -11,7 +11,7 @@ artifacts:
   files:
     - 'template.yml'
     - 'scripts/**/*'
-    - 'helloworld/**/*.py'
+    - 'exercise-s3-upload/**/*.py'
     - 'appspec.yml'
     - 'requirements.txt'
     - 'setup.py'
