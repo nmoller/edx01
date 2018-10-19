@@ -9,7 +9,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 "Central configuration"
-import os
+#import os
 
-PHOTOS_BUCKET = os.environ['PHOTOS_BUCKET']
-FLASK_SECRET = os.environ['FLASK_SECRET']
+import boto3
+import json
+
+ssm = boto3.client('ssm', 'us-east-1')
+
+def get_parameter(param_name):
+	response = ssm.get_parameters(
+		Names=[param_name]
+	)
+	for parameter in response['Parameters']:
+		return parameter['Value']
+
+#####
+
+PHOTOS_BUCKET = get_parameter('edx01_photos_bucket')
+FLASK_SECRET = get_parameter('edx01_flask_secret')

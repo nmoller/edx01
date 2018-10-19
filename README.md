@@ -25,6 +25,26 @@ This sample includes:
 * template.yml - this file contains the description of AWS resources used by AWS
   CloudFormation to deploy your infrastructure
 
+Pour devélopper en local:
+```
+docker run -it --name amazon -p 8001:8000 -v $PWD:/root/.ssh -v $HOME/dev/aws:/root/dev amazonlinux:2 bash
+
+curl -O https://bootstrap.pypa.io/get-pip.py
+
+python get-pip.py --user
+
+export PATH=$PATH:/root/.local/bin
+pip install awscli --upgrade --user
+aws configure # utiliser les valeurs du ficher csv
+cd edx01/
+pip install -r requirements.txt
+python setup.py install
+python exercise-s3-upload/application.py --port 8000
+
+```
+En allant par, `http://localhost:8001/` l'application répondait problème lors du upload car devéloppée en python3.
+
+Les valeurs de config sont injectées à partir de `AWS System Manager`. L'utilisateur utilisé dans `aws configure` doit avoir `AmazonEC2RoleforSSM` pour lire `ssm` la permission de lecture n'a pas fonctionnée.
 
 Getting Started
 ---------------
