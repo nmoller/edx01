@@ -46,11 +46,13 @@ def home():
         Prefix=prefix
     )
     photos = []
+    # as https://stackoverflow.com/questions/44574548/boto3-s3-sort-bucket-by-last-modified
+    get_last_modified = lambda obj: int(obj['LastModified'].strftime('%s'))
     if 'Contents' in response and response['Contents']:
         photos = [s3_client.generate_presigned_url(
             'get_object',
             Params={'Bucket': config.PHOTOS_BUCKET, 'Key': content['Key']}
-            ) for content in response['Contents']]
+            ) for content in  sorted(response['Contents'], key=get_last_modified, reverse=True)]
 
 
     form = PhotoForm()
