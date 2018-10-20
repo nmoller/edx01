@@ -75,6 +75,19 @@ def home():
                 'get_object',
                 Params={'Bucket': config.PHOTOS_BUCKET, 'Key': key})
 
+            #######
+            # rekcognition exercise
+            #######
+            rek = boto3.client('rekognition')
+            response = rek.detect_labels(
+                Image={
+                    'S3Object': {
+                        'Bucket': config.PHOTOS_BUCKET,
+                        'Name': key
+                    }
+                })
+            all_labels = [[label['Name'], label['Confidence']] for label in response['Labels']]
+
     return render_template_string("""
             {% extends "main.html" %}
             {% block content %}
@@ -98,8 +111,8 @@ def home():
             <hr/>
             <h3>Uploaded!</h3>
             <img src="{{url}}" /><br/>
-            {% for label in all_labels %}
-            <span class="label label-info">{{label}}</span>
+            {% for label, confidence in all_labels %}
+            <span class="label label-info">{{label}}: {{'%0.2f' % confidence|float}}</span>
             {% endfor %}
             {% endif %}
             
