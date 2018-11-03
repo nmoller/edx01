@@ -27,3 +27,9 @@ def get_parameter(param_name):
 
 PHOTOS_BUCKET = get_parameter('edx01_photos_bucket')
 FLASK_SECRET = get_parameter('edx01_flask_secret')
+
+# Setup DB
+DATABASE_HOST = get_parameter('edx01_db_instance')
+DATABASE_USER = get_parameter('edx01_db_user')
+DATABASE_PASSWORD = get_parameter('edx01_db_password')
+DATABASE_DB_NAME = 'photos'

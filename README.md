@@ -53,6 +53,27 @@ En allant par, `http://localhost:8001/` l'application répondait problème lors 
 
 Les valeurs de config sont injectées à partir de `AWS System Manager`. L'utilisateur utilisé dans `aws configure` doit avoir `AmazonEC2RoleforSSM` pour lire `ssm` la permission de lecture n'a pas fonctionnée.
 
+
+### DB setup
+Aller chercher le fichier:
+
+https://s3-us-west-2.amazonaws.com/us-west-2-tcdev/courses/AWS-100-ADG/v1.1.0/exercises/ex-rds.zip
+
+Comparer les changements avec ce que j'ai dans exercise-s3-upload (FlaskApp).
+
+Créer les paramètres dans `AWS System Manager`, modifier config.py pour les utiliser,
+dans le container amazon
+```
+cd exercise-rds/
+bash-4.2# ls
+Deploy  FlaskApp  SetupScripts
+bash-4.2# cd SetupScripts/
+bash-4.2# ls
+database_create_tables.py
+bash-4.2# python3 database_create_tables.py 
+This script will drop and recreate the photo table, and the web_user user.
+```
+
 Getting Started
 ---------------
 
